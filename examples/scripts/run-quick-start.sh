@@ -14,24 +14,28 @@ echo "start server: ${EXE_PATH}/QuickStartDemo --config=${SRC_PATH}/examples/Qui
 ${EXE_PATH}/QuickStartDemo --config=${SRC_PATH}/examples/QuickStartDemo/HelloServer/Server/config.conf &
 ${EXE_PATH}/ProxyServer --config=${SRC_PATH}/examples/QuickStartDemo/ProxyServer/Server/config.conf &
 
-sleep 2
+/root/thirdparts/TarsCpp/build/bin/QuickStartDemo --config=/root/thirdparts/TarsCpp/examples/CustomDemo/CustomServer/config.conf 
+/root/thirdparts/TarsCpp/build/bin/QuickStartDemo --config=/root/thirdparts/TarsCpp/examples/QuickStartDemo/HelloServer/Server/config.conf
 
-echo "client: ${EXE_PATH}/QuickStartDemoClient"
+/root/thirdparts/TarsCpp/build/bin/QuickStartDemoClient --count=100000 --call=sync --thread=1 --buffersize=100 --netthread=1
+# sleep 2
 
-${EXE_PATH}/QuickStartDemoClient --count=100000 --call=sync --thread=2 --buffersize=100 --netthread=2
+# echo "client: ${EXE_PATH}/QuickStartDemoClient"
 
-${EXE_PATH}/QuickStartDemoClient --count=100000 --call=async --thread=2 --buffersize=100 --netthread=2
+# ${EXE_PATH}/QuickStartDemoClient --count=100000 --call=sync --thread=2 --buffersize=100 --netthread=2
 
-${EXE_PATH}/QuickStartDemoClient --count=100000 --call=synctup --thread=2 --buffersize=100 --netthread=2
+# ${EXE_PATH}/QuickStartDemoClient --count=100000 --call=async --thread=2 --buffersize=100 --netthread=2
 
-${EXE_PATH}/QuickStartDemoClient --count=100000 --call=asynctup --thread=2 --buffersize=100 --netthread=2
+# ${EXE_PATH}/QuickStartDemoClient --count=100000 --call=synctup --thread=2 --buffersize=100 --netthread=2
 
-echo "client: ${EXE_PATH}/ProxyServerClient"
+# ${EXE_PATH}/QuickStartDemoClient --count=100000 --call=asynctup --thread=2 --buffersize=100 --netthread=2
 
-${EXE_PATH}/ProxyServerClient
+# echo "client: ${EXE_PATH}/ProxyServerClient"
 
-sleep 1
+# ${EXE_PATH}/ProxyServerClient
 
-killall -9 ProxyServer QuickStartDemo
+# sleep 1
+
+# killall -9 ProxyServer QuickStartDemo
 
 

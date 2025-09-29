@@ -3,7 +3,7 @@
 echo "run-custom.sh"
 
 EXE_PATH=$1
-SRC_PATH=$2/..
+SRC_PATH=$2
 
 echo ${EXE_PATH} ${SRC_PATH}
 
@@ -18,13 +18,17 @@ sleep 2
 
 #-------------------------------------------------------------------------------------------------------
 
-echo "client: ${EXE_PATH}/CustomClient"
+# echo "client: ${EXE_PATH}/CustomClient"
 
-${EXE_PATH}/CustomClient --count=10000 --thread=2 --call=sync --netthread=1 --buffersize=100
+# ${EXE_PATH}/CustomClient --count=10000 --thread=2 --call=sync --netthread=1 --buffersize=100
 
-${EXE_PATH}/CustomClient --count=10000 --thread=2 --call=async --netthread=1 --buffersize=100
+# ${EXE_PATH}/CustomClient --count=10000 --thread=2 --call=async --netthread=1 --buffersize=100
 
-killall -9 CustomServer
+# killall -9 CustomServer
 
+# /root/thirdparts/TarsCpp/build/bin
+# /root/thirdparts/TarsCpp/examples/scripts
 
+# /root/thirdparts/TarsCpp/examples/scripts/run-custom.sh  /root/thirdparts/TarsCpp/build/bin  /root/thirdparts/TarsCpp
 
+#/root/thirdparts/TarsCpp/build/bin/CustomServer --config=/root/thirdparts/TarsCpp/examples/CustomDemo/CustomServer/config.conf 

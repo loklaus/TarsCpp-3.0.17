@@ -140,7 +140,7 @@ struct ReqMessage : public TC_HandleBase
     {
         SYNC_CALL = 1, //同步
         ASYNC_CALL,    //异步
-        ONE_WAY,       //单向
+         ONE_WAY,       //单向
 //        THREAD_EXIT    //线程退出的标识
     };
 
