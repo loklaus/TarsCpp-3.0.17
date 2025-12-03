@@ -26,6 +26,208 @@
 </tars>
 ```
 
+## 完整配置参数列表
+
+### Client 配置参数
+
+所有客户端配置位于 `/tars/application/client` 路径下：
+
+#### 基础连接配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `locator` | string | - | 主控定位器地址，格式：`tars.tarsregistry.QueryObj@tcp -h IP -p PORT` |
+| `modulename` | string | - | 模块名称，用于统计上报 |
+| `sync-invoke-timeout` | int | 3000 | 同步调用超时时间（毫秒） |
+| `async-invoke-timeout` | int | 5000 | 异步调用超时时间（毫秒） |
+| `connect-timeout` | int | 1500 | 连接超时时间（毫秒） |
+| `refresh-endpoint-interval` | int | 10000 | 刷新端点列表间隔（毫秒） |
+
+#### 线程配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `netthread` | int | 1 | 客户端网络IO线程数 |
+| `asyncthread` | int | 3 | 异步回调处理线程数 |
+| `mergenetasync` | int | 0 | 是否合并网络和同步线程（0/1） |
+
+#### 队列配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `sendqueuelimit` | int | 100000 | 发送队列最大长度 |
+| `asyncqueuecap` | int | 100000 | 异步队列容量 |
+
+#### 统计上报配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `stat` | string | - | 统计服务对象名，格式：`tars.tarsstat.StatObj` |
+| `property` | string | - | 属性上报服务对象名，格式：`tars.tarsproperty.PropertyObj` |
+| `report-interval` | int | 60000 | 统计上报间隔（毫秒） |
+| `keep-alive-interval` | int | 0 | Keepalive心跳间隔（毫秒），0表示不启用 |
+
+#### SET部署配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `enableset` | string | N | 是否启用SET部署（Y/N） |
+| `setdivision` | string | - | SET分组信息，格式：`set名.地区.组名`，如：`gray.sz.1` |
+
+#### SSL/TLS配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `ca` | string | - | CA证书文件路径 |
+| `cert` | string | - | 客户端证书文件路径 |
+| `key` | string | - | 客户端私钥文件路径 |
+| `ciphers` | string | - | SSL密码套件，如：`ECDHE-RSA-AES256-GCM-SHA384` |
+
+#### 特定服务对象配置
+
+可在 `<client>` 下为特定服务对象配置独立的参数：
+
+```xml
+<client>
+    <服务对象名>
+        ca=证书路径
+        cert=客户端证书路径
+        key=私钥路径
+        accesskey=访问密钥
+        secretkey=密钥
+        ciphers=密码套件
+    </服务对象名>
+</client>
+```
+
+**示例**：
+```xml
+<client>
+    <TestApp.HelloServer.HelloObj>
+        ca=/path/to/ca.crt
+        cert=/path/to/client.crt
+        key=/path/to/client.key
+        accesskey=your-access-key
+        secretkey=your-secret-key
+    </TestApp.HelloServer.HelloObj>
+</client>
+```
+
+---
+
+### Server 配置参数
+
+所有服务端配置位于 `/tars/application/server` 路径下：
+
+#### 基础服务配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `app` | string | UNKNOWN | 应用名称 |
+| `server` | string | 可执行文件名 | 服务名称 |
+| `localip` | string | 自动获取 | 本机IP地址 |
+| `local` | string | - | 管理端口配置，格式：`tcp -h IP -p PORT -t TIMEOUT` |
+
+#### 路径配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `basepath` | string | . | 基础路径（可执行文件路径） |
+| `basepath.win` | string | - | Windows下的基础路径（优先级高于basepath） |
+| `datapath` | string | . | 数据文件路径 |
+| `datapath.win` | string | - | Windows下的数据路径 |
+| `logpath` | string | . | 日志文件路径 |
+| `logpath.win` | string | - | Windows下的日志路径 |
+
+#### 日志配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `logsize` | string/int | 52428800 | 单个日志文件大小（支持K/M/G单位） |
+| `lognum` | int | 10 | 日志文件保留个数 |
+| `loglevel` | string | DEBUG | 日志级别：DEBUG/INFO/WARN/ERROR |
+| `log` | string | - | 远程日志服务对象名，格式：`tars.tarslog.LogObj` |
+| `closecout` | int | 1 | 是否关闭标准输出（0/1） |
+
+#### Tars框架服务配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `node` | string | - | TarsNode服务地址 |
+| `config` | string | - | 配置中心服务对象名，格式：`tars.tarsconfig.ConfigObj` |
+| `notify` | string | - | 通知服务对象名，格式：`tars.tarsnotify.NotifyObj` |
+
+#### 网络线程配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `netthread` | int | 1 | 服务端网络IO线程数，建议设置为CPU核心数 |
+| `manuallisten` | int | 0 | 是否手动监听（0/1），用于服务启动后延迟监听端口 |
+
+#### 协程配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `opencoroutine` | int | 0 | 是否启用协程（0/1） |
+| `coroutinememsize` | string | 1G | 协程内存池总大小（支持K/M/G单位） |
+| `coroutinestack` | string | 128K | 单个协程栈大小（支持K/M单位） |
+
+**协程计算公式**：
+```
+最大协程数 = coroutinememsize / coroutinestack
+例如: 1G / 128K = 8192个协程
+```
+
+#### 流量统计配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `reportflow` | int | 1 | 是否上报流量统计（0/1） |
+| `checkset` | int | 1 | 是否检查SET合法性（0/1） |
+
+#### 缓冲区配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `backpacketlimit` | int | 104857600 | 接收缓冲区上限（字节），默认100MB |
+| `backpacketmin` | int | 1024 | 接收缓冲区最小值（字节） |
+
+#### SSL/TLS配置
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `ca` | string | - | CA证书文件路径 |
+| `cert` | string | - | 服务端证书文件路径 |
+| `key` | string | - | 服务端私钥文件路径 |
+| `verifyclient` | int | 0 | 是否验证客户端证书（0/1） |
+| `ciphers` | string | - | SSL密码套件 |
+
+---
+
+### Adapter 配置参数
+
+每个Adapter配置位于 `/tars/application/server/<AdapterName>` 路径下：
+
+| 参数名 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `endpoint` | string | 必填 | 监听端点，格式：`tcp -h IP -p PORT -t TIMEOUT` |
+| `servant` | string | 必填 | 绑定的Servant对象名 |
+| `threads` | int | 1 | 业务处理线程数 |
+| `maxconns` | int | 128 | 最大连接数 |
+| `queuecap` | int | 1024 | 请求队列容量 |
+| `queuetimeout` | int | 10000 | 队列超时时间（毫秒） |
+| `protocol` | string | tars | 协议类型：tars/http/json/grpc等 |
+| `allow` | string | - | 允许访问的IP列表，多个用`;`或`,`分隔 |
+| `deny` | string | - | 拒绝访问的IP列表，多个用`;`或`,`分隔 |
+| `order` | string | allow,deny | 访问控制顺序：`allow,deny` 或 `deny,allow` |
+
+**endpoint 格式说明**：
+- TCP: `tcp -h 0.0.0.0 -p 8080 -t 60000`
+- UDP: `udp -h 0.0.0.0 -p 8080 -t 60000`
+- SSL: `ssl -h 0.0.0.0 -p 8080 -t 60000`
+
+---
+
 ## 核心配置参数详解
 
 ### 1. 网络线程配置 (Network Threads)
@@ -33,7 +235,7 @@
 #### 配置项：netthread
 - **路径**: `/tars/application/server<netthread>` 或 `/tars/application/client<netthread>`
 - **类型**: 整数
-- **默认值**: CPU核心数
+- **默认值**: 1（server）/ 1（client）
 - **说明**: 控制网络IO处理线程数量
 - **推荐值**: 
   - IO密集型：CPU核心数 × 2
